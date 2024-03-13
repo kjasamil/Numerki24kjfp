@@ -1,6 +1,7 @@
 import polynomials as p
 import bisection as b
-
+from matplotlib import pyplot as plt
+import numpy as np
 
 POLYNOMIAL = [1, -2**0.5, -1, -3]
 
@@ -13,3 +14,11 @@ print(b.bisection_eps(-1, 1, 0.0000001, POLYNOMIAL))
 print(b.bisection_iter(2, 4, 5, POLYNOMIAL))
 print(b.bisection_iter(2, 4, 10, POLYNOMIAL))
 print(p.horner_differential(0.47, POLYNOMIAL))
+
+a = 2
+b = 4
+x = np.linspace(a, b)
+
+plt.plot(x, p.horner(x, POLYNOMIAL))
+plt.grid(True)
+plt.show()
