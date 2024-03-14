@@ -1,5 +1,6 @@
 import polynomials as p
 import bisection as b
+import newton as n
 from matplotlib import pyplot as plt
 import numpy as np
 
@@ -17,8 +18,12 @@ print(p.horner_differential(0.47, POLYNOMIAL))
 
 a = 2
 b = 4
+eps = 0.0000001
 x = np.linspace(a, b)
 
 plt.plot(x, p.horner(x, POLYNOMIAL))
 plt.grid(True)
 plt.show()
+
+print(n.newton_eps(a, b, eps, POLYNOMIAL))
+print(n.newton_iteration(a, b, 100, POLYNOMIAL))
