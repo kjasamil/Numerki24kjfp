@@ -25,10 +25,9 @@ x = np.linspace(a, b)
 # plt.plot(x, p.horner(x, POLYNOMIAL))
 plt.grid(True)
 # plt.show()
-
 x = 3
 print(p.horner_differential(x, POLYNOMIAL))
-print(p.derivative_by_definition(x, POLYNOMIAL))
+# print(p.derivative_by_definition(x, POLYNOMIAL))
 print(n.newton_eps(-1, pi, 0.00001, sin))
 while True:
     print("Wybierz funkcję: ")
@@ -87,14 +86,14 @@ while True:
         method = input("Wybierz wariant:")
         if method == "1":
             eps = float(input("Podaj dokładność: "))
-            # bisection_eps = bi.bisection_eps(a, b, eps, func)
+            bisection_eps = bi.bisection_eps(a, b, eps, func)
             newton_eps = n.newton_eps(a, b, eps, func)
-            print(newton_eps)
+            print(bisection_eps, newton_eps)
         else:
             iterations = int(input("Podaj liczbe iteracji: "))
-            # bisection_iter = bi.bisection_iter(a, b, iterations, func)
+            bisection_iter = bi.bisection_iter(a, b, iterations, func)
             newton_iter = n.newton_iteration(a, b, iterations, func)
-            print(newton_iter)
+            print(bisection_iter, newton_iter)
 
 
     break
