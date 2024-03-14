@@ -27,6 +27,8 @@ def newton_iteration(a, b, iterations, coeffs):
 
         x = old_x - p.horner(old_x, coeffs) / derivative_value
         iteration = iteration + 1
+        if x == old_x:
+            return [x, iteration]
     return [x, iteration]
 
 
