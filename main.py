@@ -4,7 +4,7 @@ import newton as n
 from matplotlib import pyplot as plt
 import numpy as np
 from math import sin, cos, tan, pi
-
+from functools import partial
 POLYNOMIAL = [1, -2**0.5, -1, -3]
 
 # print("Witaj!")
@@ -44,7 +44,8 @@ while True:
         coeff_table = list(map(float, coeff_table))
         a = 1
         b = 1
-        while p.horner(a, coeff_table) * p.horner(b, coeff_table) > 0:
+        func = partial(p.horner, polynomial_coeffs=coeff_table)
+        while func(a) * func(b) > 0:
             a = float(input("Podaj pierwszą liczbę: "))
             b = float(input("Podaj drugą liczbę: "))
 
@@ -53,14 +54,14 @@ while True:
         method = input("Wybierz wariant:")
         if method == "1":
             eps = float(input("Podaj dokładność: "))
-            bisection_eps = bi.bisection_eps(a, b, eps, coeff_table)
-            newton_eps = n.newton_poly_eps(a, b, eps, coeff_table)
-            print(bisection_eps, newton_eps)
+            # bisection_eps = bi.bisection_eps(a, b, eps, coeff_table)
+            newton_eps = n.newton_eps(a, b, eps, func)
+            print(newton_eps)
         else:
             iterations = int(input("Podaj liczbe iteracji: "))
-            bisection_iter = bi.bisection_iter(a, b, iterations, coeff_table)
-            newton_iter = n.newton_poly_iteration(a, b, iterations, coeff_table)
-            print(bisection_iter, newton_iter)
+            # bisection_iter = bi.bisection_iter(a, b, iterations, coeff_table)
+            newton_iter = n.newton_iteration(a, b, iterations, func)
+            print(newton_iter)
 
         x = np.linspace(a, b)
         plt.plot(x, p.horner(x, coeff_table))
