@@ -7,6 +7,11 @@ from math import sin, cos, tan, pi
 from functools import partial
 POLYNOMIAL = [1, -2**0.5, -1, -3]
 
+
+def exponential(xi, base_val, param):
+    return base_val ** xi + param
+
+
 # print("Witaj!")
 # print("Aktualnie wybrana funkcja:")
 # print("Wielomian: ")
@@ -16,19 +21,19 @@ POLYNOMIAL = [1, -2**0.5, -1, -3]
 # print(b.bisection_iter(2, 4, 5, POLYNOMIAL))
 # print(b.bisection_iter(2, 4, 10, POLYNOMIAL))
 # print(p.horner_differential(0.47, POLYNOMIAL))
-
-a = 2
-b = 4
-eps = 0.0000001
-x = np.linspace(a, b)
+#
+# a = 2
+# b = 4
+# eps = 0.0000001
+# x = np.linspace(a, b)
 
 # plt.plot(x, p.horner(x, POLYNOMIAL))
-plt.grid(True)
 # plt.show()
-x = 3
-print(p.horner_differential(x, POLYNOMIAL))
+# x = 3
+# print(p.horner_differential(x, POLYNOMIAL))
 # print(p.derivative_by_definition(x, POLYNOMIAL))
-print(n.newton_eps(-1, pi, 0.00001, sin))
+# print(n.newton_eps(-1, pi, 0.00001, sin))
+plt.grid(True)
 while True:
     print("Wybierz funkcję: ")
     print("1. Wielomian")
@@ -95,5 +100,28 @@ while True:
             newton_iter = n.newton_iteration(a, b, iterations, func)
             print(bisection_iter, newton_iter)
 
+    elif case == "3":
+        base = float(input("Podaj podstawę: "))
+        other_param = float(input("Podaj wyraz wolny: "))
+        func = partial(exponential, base_val=base, param=other_param)
+        a = 1
+        b = 1
+        while func(a) * func(b) > 0:
+            a = float(input("Podaj pierwszą liczbę: "))
+            b = float(input("Podaj drugą liczbę: "))
+
+        print("1. Wariant o określonej dokładności")
+        print("2. Wariant o określonej liczbie iteracji")
+        method = input("Wybierz wariant:")
+        if method == "1":
+            eps = float(input("Podaj dokładność: "))
+            bisection_eps = bi.bisection_eps(a, b, eps, func)
+            newton_eps = n.newton_eps(a, b, eps, func)
+            print(bisection_eps, newton_eps)
+        else:
+            iterations = int(input("Podaj liczbe iteracji: "))
+            bisection_iter = bi.bisection_iter(a, b, iterations, func)
+            newton_iter = n.newton_iteration(a, b, iterations, func)
+            print(bisection_iter, newton_iter)
 
     break
