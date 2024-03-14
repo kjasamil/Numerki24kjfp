@@ -29,7 +29,7 @@ plt.grid(True)
 x = 3
 print(p.horner_differential(x, POLYNOMIAL))
 print(p.derivative_by_definition(x, POLYNOMIAL))
-
+print(n.newton_eps(-1, pi, 0.00001, sin))
 while True:
     print("Wybierz funkcję: ")
     print("1. Wielomian")
@@ -48,22 +48,52 @@ while True:
             a = float(input("Podaj pierwszą liczbę: "))
             b = float(input("Podaj drugą liczbę: "))
 
-    print("1. Wariant o określonej dokładności")
-    print("2. Wariant o określonej liczbie iteracji")
-    method = input("Wybierz wariant:")
-    if method == "1":
-        eps = float(input("Podaj dokładność: "))
-        bisection_eps = bi.bisection_eps(a, b, eps, coeff_table)
-        newton_eps = n.newton_eps(a, b, eps, coeff_table)
-        print(bisection_eps, newton_eps)
-    else:
-        iterations = int(input("Podaj liczbe iteracji: "))
-        bisection_iter = bi.bisection_iter(a, b, iterations, coeff_table)
-        newton_iter = n.newton_iteration(a, b, iterations, coeff_table)
-        print(bisection_iter, newton_iter)
+        print("1. Wariant o określonej dokładności")
+        print("2. Wariant o określonej liczbie iteracji")
+        method = input("Wybierz wariant:")
+        if method == "1":
+            eps = float(input("Podaj dokładność: "))
+            bisection_eps = bi.bisection_eps(a, b, eps, coeff_table)
+            newton_eps = n.newton_poly_eps(a, b, eps, coeff_table)
+            print(bisection_eps, newton_eps)
+        else:
+            iterations = int(input("Podaj liczbe iteracji: "))
+            bisection_iter = bi.bisection_iter(a, b, iterations, coeff_table)
+            newton_iter = n.newton_poly_iteration(a, b, iterations, coeff_table)
+            print(bisection_iter, newton_iter)
 
-    x = np.linspace(a, b)
-    plt.plot(x, p.horner(x, coeff_table))
-    plt.show()
+        x = np.linspace(a, b)
+        plt.plot(x, p.horner(x, coeff_table))
+        plt.show()
+    elif case == "2":
+        print("1. Sinus")
+        print("2. Cosinus")
+        function = input("3. Tangens ")
+        if function == "1":
+            func = sin
+        elif function == "2":
+            func = cos
+        else:
+            func = tan
+        a = 1
+        b = 1
+        while func(a) * func(b) > 0:
+            a = float(input("Podaj pierwszą liczbę: "))
+            b = float(input("Podaj drugą liczbę: "))
+
+        print("1. Wariant o określonej dokładności")
+        print("2. Wariant o określonej liczbie iteracji")
+        method = input("Wybierz wariant:")
+        if method == "1":
+            eps = float(input("Podaj dokładność: "))
+            # bisection_eps = bi.bisection_eps(a, b, eps, func)
+            newton_eps = n.newton_eps(a, b, eps, func)
+            print(newton_eps)
+        else:
+            iterations = int(input("Podaj liczbe iteracji: "))
+            # bisection_iter = bi.bisection_iter(a, b, iterations, func)
+            newton_iter = n.newton_iteration(a, b, iterations, func)
+            print(newton_iter)
+
 
     break
