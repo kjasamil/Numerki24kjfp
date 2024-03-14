@@ -14,6 +14,11 @@ def horner_differential(x, polynomial_coeffs):
     return differential_value
 
 
+def derivative_by_definition(x, polynomial_coeffs):
+    h = 1e-9
+    return (horner(x + h, polynomial_coeffs) - horner(x, polynomial_coeffs)) / h
+
+
 def polynomial_to_string(polynomial_coeffs):
     polynomial_string = ""
     max_power = len(polynomial_coeffs) - 1

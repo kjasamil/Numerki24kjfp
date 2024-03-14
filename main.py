@@ -29,3 +29,7 @@ print(n.newton_eps(a, b, eps, POLYNOMIAL))
 print(n.newton_iteration(a, b, 100, POLYNOMIAL))
 
 print(p.polynomial_to_string(POLYNOMIAL))
+
+x = 3
+print(p.horner_differential(x, POLYNOMIAL))
+print(p.derivative_by_definition(x, POLYNOMIAL))
