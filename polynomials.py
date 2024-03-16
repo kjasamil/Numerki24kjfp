@@ -47,6 +47,6 @@ def polynomial_to_string(polynomial_coeffs):
             if max_power == 0:
                 if coefficient > 0:
                     polynomial_string += f"+{coefficient}"
-                else:
+                elif coefficient != 0:
                     polynomial_string += f"{coefficient}"
     return polynomial_string
