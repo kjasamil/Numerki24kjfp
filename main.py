@@ -10,8 +10,8 @@ def exponential(xi, base_val, param):
     return base_val ** xi + param
 
 
-def complex_func(x):
-    return np.sin(3*(x**2)-2*x)
+def complex_func(xi):
+    return np.sin(3*(xi**2)-2*xi)
 
 
 chosen_func_string = ""
@@ -79,8 +79,9 @@ while True:
         plt.plot(x, func(x))
         plt.show()
     elif case == "6":
-        a = 1
-        b = 1
+        print("Miejsce zerowe będzie poszukiwane na przedziale [a; b]")
+        a = float(input("Podaj a: "))
+        b = float(input("Podaj b: "))
         while func(a) * func(b) > 0:
             print("Miejsce zerowe będzie poszukiwane na przedziale [a; b]")
             a = float(input("Podaj a: "))
@@ -88,23 +89,23 @@ while True:
             if func(a) * func(b) > 0:
                 print("Na obu krańcach przedziału f(x) > 0, nie będzie możliwe znalezienie miejsca zerowego.")
                 print("Wprowadź ponownie!")
-            print("1. Wariant o określonej dokładności")
-            print("2. Wariant o określonej liczbie iteracji")
-            method = input("Wybierz wariant:")
-            if method == "1":
-                eps = float(input("Podaj dokładność: "))
-                bisection_eps = bi.bisection_eps(a, b, eps, func)
-                newton_eps = n.newton_eps(a, b, eps, func)
-                print("Metodą bisekcji [miejsce zerowe, ilość iteracji]: ", bisection_eps)
-                print("Metodą Newtona [miejsce zerowe, ilość iteracji]: ", newton_eps)
-            else:
-                iterations = int(input("Podaj liczbe iteracji: "))
-                bisection_iter = bi.bisection_iter(a, b, iterations, func)
-                newton_iter = n.newton_iteration(a, b, iterations, func)
-                print("Metodą bisekcji [miejsce zerowe, ilość iteracji]: ", bisection_iter)
-                print("Metodą Newtona [miejsce zerowe, ilość iteracji]: ", newton_iter)
-            x = np.linspace(a, b)
-            plt.plot(x, func(x))
-            plt.show()
+        print("1. Wariant o określonej dokładności")
+        print("2. Wariant o określonej liczbie iteracji")
+        method = input("Wybierz wariant:")
+        if method == "1":
+            eps = float(input("Podaj dokładność: "))
+            bisection_eps = bi.bisection_eps(a, b, eps, func)
+            newton_eps = n.newton_eps(a, b, eps, func)
+            print("Metodą bisekcji [miejsce zerowe, ilość iteracji]: ", bisection_eps)
+            print("Metodą Newtona [miejsce zerowe, ilość iteracji]: ", newton_eps)
+        else:
+            iterations = int(input("Podaj liczbe iteracji: "))
+            bisection_iter = bi.bisection_iter(a, b, iterations, func)
+            newton_iter = n.newton_iteration(a, b, iterations, func)
+            print("Metodą bisekcji [miejsce zerowe, ilość iteracji]: ", bisection_iter)
+            print("Metodą Newtona [miejsce zerowe, ilość iteracji]: ", newton_iter)
+        x = np.linspace(a, b)
+        plt.plot(x, func(x))
+        plt.show()
     elif case == "7":
         break

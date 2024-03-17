@@ -14,6 +14,8 @@ def newton_eps(a, b, eps, function):
     while abs(old_x - x) > eps:
         old_x = x
         derivative = derivative_by_definition(old_x, function)
+        if derivative == 0:
+            return [old_x, iteration]
         x = old_x - function(old_x) / derivative
         iteration = iteration + 1
     return [x, iteration]
@@ -29,7 +31,6 @@ def newton_iteration(a, b, iterations, function):
         derivative = derivative_by_definition(old_x, function)
         if derivative == 0:
             return [old_x, iteration]
-
         x = old_x - function(old_x) / derivative
         iteration = iteration + 1
         if x == old_x:
