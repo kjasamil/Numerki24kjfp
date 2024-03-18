@@ -108,6 +108,20 @@ while True:
                 print("Wybrano niewłaściwy przedział.")
             elif func(a) * func(b) > 0:
                 print("Nie jest możliwe znalezienie miejsca zerowego w tym przedziale, ponieważ f(a) * f(b) > 0.")
+            elif func(a) * func(b) == 0:
+                print("Bez korzystania z algorytmów można już wskazać, że:")
+                if func(a) == 0:
+                    print(f"Miejsce zerowe funkcji jest w punkcie ({a}, 0)")
+                    zerowe = a
+                else:
+                    print(f"Miejsce zerowe funkcji jest w punkcie ({b}, 0)")
+                    zerowe = b
+                x = np.linspace(zerowe - 3, zerowe + 3, 1000)
+                plt.scatter(zerowe, 0, color="red")
+                plt.plot(x, func(x))
+                if is_chosen_tan:
+                    plt.ylim(-8, 8)
+                plt.show()
             else:
                 error = False
                 print("1. Wariant o określonej dokładności")
@@ -118,22 +132,32 @@ while True:
                     if eps > 0:
                         bisection_eps = bi.bisection_eps(a, b, eps, func)
                         newton_eps = n.newton_eps(a, b, eps, func)
-                        print("Metodą bisekcji [miejsce zerowe, ilość iteracji]: ", bisection_eps)
-                        print("Metodą Newtona [miejsce zerowe, ilość iteracji]: ", newton_eps)
+                        print("Metodą bisekcji [miejsce zerowe, ilość iteracji]: ", bisection_eps[0], ", ", bisection_eps[1])
+                        if newton_eps[3] == 1:
+                            print("Metodą Newtona [miejsce zerowe, ilość iteracji]: ", newton_eps[0], ", ", newton_eps[1])
+                        else:
+                            print("Metoda Newtona: Podczas obliczeń otrzymano punkt, w której pochodna jest zerowa."
+                                  "Nie jest możliwe w takiej sytuacji znalezienie miejsca zerowego.")
                         plt.scatter(bisection_eps[0], 0, color="red")
-                        plt.scatter(newton_eps[0], 0, color="green")
+                        if newton_eps[3] == 1:
+                            plt.scatter(newton_eps[0], 0, color="green")
                     else:
                         print("Dokładność musi być liczbą większą od 0.")
                         error = True
                 else:
-                    iterations = int(input("Podaj liczbe iteracji: "))
+                    iterations = int(input("Podaj liczbę iteracji: "))
                     if iterations > 0:
                         bisection_iter = bi.bisection_iter(a, b, iterations, func)
                         newton_iter = n.newton_iteration(a, b, iterations, func)
-                        print("Metodą bisekcji [miejsce zerowe, ilość iteracji]: ", bisection_iter)
-                        print("Metodą Newtona [miejsce zerowe, ilość iteracji]: ", newton_iter)
+                        print("Metodą bisekcji [miejsce zerowe, ilość iteracji]: ", bisection_iter[0], ", ", bisection_iter[1])
+                        if newton_iter[3] == 1:
+                            print("Metodą Newtona [miejsce zerowe, ilość iteracji]: ", newton_iter[0], ", ", newton_iter[1])
+                        else:
+                            print("Metoda Newtona: Podczas obliczeń otrzymano punkt, w której pochodna jest zerowa."
+                                  "Nie jest możliwe w takiej sytuacji znalezienie miejsca zerowego.")
                         plt.scatter(bisection_iter[0], 0, color="red")
-                        plt.scatter(newton_iter[0], 0, color="green")
+                        if newton_iter[3] == 1:
+                            plt.scatter(newton_iter[0], 0, color="green")
                     else:
                         print("Liczba iteracji musi być liczbą całkowitą większą od 0.")
                         error = True
