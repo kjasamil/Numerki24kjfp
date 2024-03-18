@@ -1,5 +1,3 @@
-
-
 def bisection_eps(a, b, eps, func):
     center = 0
     i = 0
@@ -18,7 +16,7 @@ def bisection_eps(a, b, eps, func):
             else:
                 a = center
         return [center, i]
-    return "Oops"
+    return
 
 
 def bisection_iter(a, b, iterations, func):
@@ -39,4 +37,4 @@ def bisection_iter(a, b, iterations, func):
             else:
                 a = center
         return [center, i]
-    return "Oops"
+    return

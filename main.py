@@ -16,6 +16,7 @@ def complex_func(xi):
 
 chosen_func_string = ""
 is_chosen = False
+is_chosen_tan = False
 while True:
     plt.grid(True)
     if is_chosen:
@@ -27,23 +28,28 @@ while True:
     print("5. Pokaż wykres funkcji")
     print("6. Znajdź miejsce zerowe")
     print("7. Koniec")
-    case = input("Enter a number: ")
+    case = input("Wybierz opcję: ")
     if case == "1":
-        polynomial_degree = int(input("Wprowadź stopień wielomianu: "))
         coeff_table = []
-        max_power = polynomial_degree
-        for i in range(polynomial_degree + 1):
-            if max_power > 0:
-                print(f"Podaj współczynnik przy wyrazie x^{max_power}:", end='')
-            else:
-                print("Podaj wyraz wolny:", end='')
-            coefficient = float(input())
-            coeff_table.append(coefficient)
-            max_power -= 1
-        func = partial(p.horner, polynomial_coeffs=coeff_table)
-        chosen_func_string = p.polynomial_to_string(coeff_table)
-        is_chosen = True
+        polynomial_degree = int(input("Wprowadź stopień wielomianu: "))
+        if polynomial_degree > 0:
+            max_power = polynomial_degree
+            for i in range(polynomial_degree + 1):
+                if max_power > 0:
+                    print(f"Podaj współczynnik przy wyrazie x^{max_power}:", end='')
+                else:
+                    print("Podaj wyraz wolny:", end='')
+                coefficient = float(input())
+                coeff_table.append(coefficient)
+                max_power -= 1
+            func = partial(p.horner, polynomial_coeffs=coeff_table)
+            chosen_func_string = p.polynomial_to_string(coeff_table)
+            is_chosen = True
+            is_chosen_tan = False
+        else:
+            print("Stopień wielomianu musi być dodatnią liczbą całkowitą.")
     elif case == "2":
+        error = False
         print("1. Sinus")
         print("2. Cosinus")
         print("3. Tangens")
@@ -54,10 +60,15 @@ while True:
         elif function == "2":
             func = np.cos
             chosen_func_string = "cos(x)"
-        else:
+        elif function == "3":
             func = np.tan
             chosen_func_string = "tan(x)"
-        is_chosen = True
+            is_chosen_tan = True
+        else:
+            print("Brak takiej opcji w menu.")
+            error = True
+        if not error:
+            is_chosen = True
     elif case == "3":
         base = float(input("Podaj podstawę: "))
         other_param = float(input("Podaj wyraz wolny: "))
@@ -68,44 +79,71 @@ while True:
         elif other_param < 0:
             chosen_func_string += str(other_param)
         is_chosen = True
+        is_chosen_tan = False
     elif case == "4":
         func = complex_func
         chosen_func_string = "sin(3x^2-2x)"
         is_chosen = True
+        is_chosen_tan = False
     elif case == "5":
-        a = float(input("Podaj lewy kraniec przedziału:"))
-        b = float(input("Podaj prawy kraniec przedziału:"))
-        x = np.linspace(a, b)
-        plt.plot(x, func(x))
-        plt.show()
+        if is_chosen:
+            a = float(input("Podaj lewy kraniec przedziału:"))
+            b = float(input("Podaj prawy kraniec przedziału:"))
+            if a < b:
+                x = np.linspace(a, b, 1000)
+                plt.plot(x, func(x))
+                if is_chosen_tan:
+                    plt.ylim(-8, 8)
+                plt.show()
+            else:
+                print("Wybrano niewłaściwy przedział.")
+        else:
+            print("Brak wybranej funkcji.")
     elif case == "6":
-        print("Miejsce zerowe będzie poszukiwane na przedziale [a; b]")
-        a = float(input("Podaj a: "))
-        b = float(input("Podaj b: "))
-        while func(a) * func(b) > 0:
+        if is_chosen:
             print("Miejsce zerowe będzie poszukiwane na przedziale [a; b]")
             a = float(input("Podaj a: "))
             b = float(input("Podaj b: "))
-            if func(a) * func(b) > 0:
-                print("Na obu krańcach przedziału f(x) > 0, nie będzie możliwe znalezienie miejsca zerowego.")
-                print("Wprowadź ponownie!")
-        print("1. Wariant o określonej dokładności")
-        print("2. Wariant o określonej liczbie iteracji")
-        method = input("Wybierz wariant:")
-        if method == "1":
-            eps = float(input("Podaj dokładność: "))
-            bisection_eps = bi.bisection_eps(a, b, eps, func)
-            newton_eps = n.newton_eps(a, b, eps, func)
-            print("Metodą bisekcji [miejsce zerowe, ilość iteracji]: ", bisection_eps)
-            print("Metodą Newtona [miejsce zerowe, ilość iteracji]: ", newton_eps)
+            if a >= b:
+                print("Wybrano niewłaściwy przedział.")
+            elif func(a) * func(b) > 0:
+                print("Nie jest możliwe znalezienie miejsca zerowego w tym przedziale, ponieważ f(a) * f(b) > 0.")
+            else:
+                error = False
+                print("1. Wariant o określonej dokładności")
+                print("2. Wariant o określonej liczbie iteracji")
+                method = input("Wybierz wariant:")
+                if method == "1":
+                    eps = float(input("Podaj dokładność: "))
+                    if eps > 0:
+                        bisection_eps = bi.bisection_eps(a, b, eps, func)
+                        newton_eps = n.newton_eps(a, b, eps, func)
+                        print("Metodą bisekcji [miejsce zerowe, ilość iteracji]: ", bisection_eps)
+                        print("Metodą Newtona [miejsce zerowe, ilość iteracji]: ", newton_eps)
+                        plt.scatter(bisection_eps[0], 0, color="red")
+                        plt.scatter(newton_eps[0], 0, color="green")
+                    else:
+                        print("Dokładność musi być liczbą większą od 0.")
+                        error = True
+                else:
+                    iterations = int(input("Podaj liczbe iteracji: "))
+                    if iterations > 0:
+                        bisection_iter = bi.bisection_iter(a, b, iterations, func)
+                        newton_iter = n.newton_iteration(a, b, iterations, func)
+                        print("Metodą bisekcji [miejsce zerowe, ilość iteracji]: ", bisection_iter)
+                        print("Metodą Newtona [miejsce zerowe, ilość iteracji]: ", newton_iter)
+                        plt.scatter(bisection_iter[0], 0, color="red")
+                        plt.scatter(newton_iter[0], 0, color="green")
+                    else:
+                        print("Liczba iteracji musi być liczbą całkowitą większą od 0.")
+                        error = True
+                if not error:
+                    x = np.linspace(a, b, 1000)
+                    plt.plot(x, func(x))
+                    if is_chosen_tan:
+                        plt.ylim(-8, 8)
+                    plt.show()
         else:
-            iterations = int(input("Podaj liczbe iteracji: "))
-            bisection_iter = bi.bisection_iter(a, b, iterations, func)
-            newton_iter = n.newton_iteration(a, b, iterations, func)
-            print("Metodą bisekcji [miejsce zerowe, ilość iteracji]: ", bisection_iter)
-            print("Metodą Newtona [miejsce zerowe, ilość iteracji]: ", newton_iter)
-        x = np.linspace(a, b)
-        plt.plot(x, func(x))
-        plt.show()
+            print("Brak wybranej funkcji.")
     elif case == "7":
         break

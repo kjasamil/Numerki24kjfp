@@ -5,15 +5,6 @@ def horner(x, polynomial_coeffs):
     return polynomial_value
 
 
-def horner_differential(x, polynomial_coeffs):
-    differential_value = 0
-    max_power = len(polynomial_coeffs) - 1
-    for coefficient in polynomial_coeffs[:-1]:
-        differential_value = differential_value * x + (coefficient * max_power)
-        max_power -= 1
-    return differential_value
-
-
 def polynomial_to_string(polynomial_coeffs):
     polynomial_string = ""
     max_power = len(polynomial_coeffs) - 1

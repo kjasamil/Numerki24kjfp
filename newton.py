@@ -1,5 +1,3 @@
-
-
 def derivative_by_definition(x, function):
     h = 1e-9
     return (function(x + h) - function(x)) / h
