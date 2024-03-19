@@ -33,4 +33,4 @@ def newton_iteration(a, b, iterations, function):
         if x == old_x:
             return [x, iteration, 1]
         iteration = iteration + 1
-    return [x, iteration]
+    return [x, iteration, 1]
