@@ -30,7 +30,7 @@ def newton_iteration(a, b, iterations, function):
         if derivative == 0:
             return [old_x, iteration, 0]
         x = old_x - function(old_x) / derivative
-        iteration = iteration + 1
         if x == old_x:
             return [x, iteration, 1]
+        iteration = iteration + 1
     return [x, iteration]
