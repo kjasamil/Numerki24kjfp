@@ -28,7 +28,7 @@ def newton_iteration(a, b, iterations, function):
         old_x = x
         derivative = derivative_by_definition(old_x, function)
         if derivative == 0:
-            return [old_x, iteration, 0]
+            return [old_x, -1, 0]
         x = old_x - function(old_x) / derivative
         if x == old_x:
             return [x, iteration, 1]

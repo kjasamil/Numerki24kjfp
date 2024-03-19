@@ -14,11 +14,28 @@ def complex_func(xi):
     return np.sin(3*(xi**2)-2*xi)
 
 
+def draw(a1, b1, func1, zero_place_display_bisection, zero_place_display_newton, one_zero_point_display,
+         tan, point_bisection=0.0, point_newton=0.0, point_solo=0.0):
+    plt.grid(True)
+    x1 = np.linspace(a1, b1, 1000)
+    plt.plot(x1, func1(x1))
+    if tan:
+        plt.ylim(-8, 8)
+    if zero_place_display_bisection:
+        plt.scatter(point_bisection, 0, color="red", label="Bisekcja")
+    if zero_place_display_newton:
+        plt.scatter(point_newton, 0, color="green", label="Newton")
+    if one_zero_point_display:
+        plt.scatter(point_solo, 0, color="blue")
+    if zero_place_display_bisection or zero_place_display_newton:
+        plt.legend()
+    plt.show()
+
+
 chosen_func_string = ""
 is_chosen = False
 is_chosen_tan = False
 while True:
-    plt.grid(True)
     if is_chosen:
         print("Wybrana funkcja:", chosen_func_string)
     print("1. Funkcja wielomianowa")
@@ -90,11 +107,8 @@ while True:
             a = float(input("Podaj lewy kraniec przedziału:"))
             b = float(input("Podaj prawy kraniec przedziału:"))
             if a < b:
-                x = np.linspace(a, b, 1000)
-                plt.plot(x, func(x))
-                if is_chosen_tan:
-                    plt.ylim(-8, 8)
-                plt.show()
+                draw(a, b, func, False, False,
+                     False, is_chosen_tan)
             else:
                 print("Wybrano niewłaściwy przedział.")
         else:
@@ -111,18 +125,14 @@ while True:
             elif func(a) * func(b) == 0:
                 print("Bez korzystania z algorytmów można już wskazać, że:")
                 if func(a) == 0:
-                    print(f"Miejsce zerowe funkcji jest w punkcie ({a}, 0)")
                     zerowe = a
                 else:
-                    print(f"Miejsce zerowe funkcji jest w punkcie ({b}, 0)")
                     zerowe = b
-                x = np.linspace(zerowe - 3, zerowe + 3, 1000)
-                plt.scatter(zerowe, 0, color="red")
-                plt.plot(x, func(x))
-                if is_chosen_tan:
-                    plt.ylim(-8, 8)
-                plt.show()
+                print(f"Miejsce zerowe funkcji jest w punkcie ({zerowe}, 0)")
+                draw(zerowe-3, zerowe+3, func, False, False,
+                     True, is_chosen_tan, 0.0, 0.0, zerowe)
             else:
+                newton_ok = False
                 error = False
                 print("1. Wariant o określonej dokładności")
                 print("2. Wariant o określonej liczbie iteracji")
@@ -130,44 +140,31 @@ while True:
                 if method == "1":
                     eps = float(input("Podaj dokładność: "))
                     if eps > 0:
-                        bisection_eps = bi.bisection_eps(a, b, eps, func)
-                        newton_eps = n.newton_eps(a, b, eps, func)
-                        print("Metodą bisekcji [miejsce zerowe, ilość iteracji]: ", bisection_eps[0], ", ", bisection_eps[1])
-                        if newton_eps[2] == 1:
-                            print("Metodą Newtona [miejsce zerowe, ilość iteracji]: ", newton_eps[0], ", ", newton_eps[1])
-                        else:
-                            print("Metoda Newtona: Podczas obliczeń otrzymano punkt, w której pochodna jest zerowa."
-                                  "Nie jest możliwe w takiej sytuacji znalezienie miejsca zerowego.")
-                        plt.scatter(bisection_eps[0], 0, color="red", label="Bisekcja")
-                        if newton_eps[2] == 1:
-                            plt.scatter(newton_eps[0], 0, color="green", label="Newton")
+                        bisection = bi.bisection_eps(a, b, eps, func)
+                        newton = n.newton_eps(a, b, eps, func)
                     else:
                         print("Dokładność musi być liczbą większą od 0.")
                         error = True
                 else:
                     iterations = int(input("Podaj liczbę iteracji: "))
                     if iterations > 0:
-                        bisection_iter = bi.bisection_iter(a, b, iterations, func)
-                        newton_iter = n.newton_iteration(a, b, iterations, func)
-                        print("Metodą bisekcji [miejsce zerowe, ilość iteracji]: ", bisection_iter[0], ", ", bisection_iter[1])
-                        if newton_iter[2] == 1:
-                            print("Metodą Newtona [miejsce zerowe, ilość iteracji]: ", newton_iter[0], ", ", newton_iter[1])
-                        else:
-                            print("Metoda Newtona: Podczas obliczeń otrzymano punkt, w której pochodna jest zerowa."
-                                  "Nie jest możliwe w takiej sytuacji znalezienie miejsca zerowego.")
-                        plt.scatter(bisection_iter[0], 0, color="red", label="Bisekcja")
-                        if newton_iter[2] == 1:
-                            plt.scatter(newton_iter[0], 0, color="green", label="Newton")
+                        bisection = bi.bisection_iter(a, b, iterations, func)
+                        newton = n.newton_iteration(a, b, iterations, func)
                     else:
                         print("Liczba iteracji musi być liczbą całkowitą większą od 0.")
                         error = True
                 if not error:
-                    x = np.linspace(a, b, 1000)
-                    plt.plot(x, func(x))
-                    if is_chosen_tan:
-                        plt.ylim(-8, 8)
-                    plt.legend()
-                    plt.show()
+                    print("Metodą bisekcji [miejsce zerowe, ilość iteracji]: ", bisection[0], ", ", bisection[1])
+                    miejsce1 = bisection[0]
+                    newton_ok = (newton[2] == 1)
+                    if newton_ok:
+                        print("Metodą Newtona [miejsce zerowe, ilość iteracji]: ", newton[0], ", ", newton[1])
+                        miejsce2 = newton[0]
+                    else:
+                        print("Metoda Newtona: Podczas obliczeń otrzymano punkt, w której pochodna jest zerowa."
+                              "Nie jest możliwe w takiej sytuacji znalezienie miejsca zerowego.")
+                    draw(a, b, func, True, newton_ok,
+                         False, is_chosen_tan, miejsce1, miejsce2, 0.0)
         else:
             print("Brak wybranej funkcji.")
     elif case == "7":
