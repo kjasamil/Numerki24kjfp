@@ -163,6 +163,7 @@ while True:
                     else:
                         print("Metoda Newtona: Podczas obliczeń otrzymano punkt, w której pochodna jest zerowa."
                               "Nie jest możliwe w takiej sytuacji znalezienie miejsca zerowego.")
+                        miejsce2 = 0.0
                     draw(a, b, func, True, newton_ok,
                          False, is_chosen_tan, miejsce1, miejsce2, 0.0)
         else:
