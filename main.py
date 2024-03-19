@@ -138,9 +138,9 @@ while True:
                         else:
                             print("Metoda Newtona: Podczas obliczeń otrzymano punkt, w której pochodna jest zerowa."
                                   "Nie jest możliwe w takiej sytuacji znalezienie miejsca zerowego.")
-                        plt.scatter(bisection_eps[0], 0, color="red")
+                        plt.scatter(bisection_eps[0], 0, color="red", label="Bisekcja")
                         if newton_eps[2] == 1:
-                            plt.scatter(newton_eps[0], 0, color="green")
+                            plt.scatter(newton_eps[0], 0, color="green", label="Newton")
                     else:
                         print("Dokładność musi być liczbą większą od 0.")
                         error = True
@@ -155,9 +155,9 @@ while True:
                         else:
                             print("Metoda Newtona: Podczas obliczeń otrzymano punkt, w której pochodna jest zerowa."
                                   "Nie jest możliwe w takiej sytuacji znalezienie miejsca zerowego.")
-                        plt.scatter(bisection_iter[0], 0, color="red")
+                        plt.scatter(bisection_iter[0], 0, color="red", label="Bisekcja")
                         if newton_iter[2] == 1:
-                            plt.scatter(newton_iter[0], 0, color="green")
+                            plt.scatter(newton_iter[0], 0, color="green", label="Newton")
                     else:
                         print("Liczba iteracji musi być liczbą całkowitą większą od 0.")
                         error = True
@@ -166,6 +166,7 @@ while True:
                     plt.plot(x, func(x))
                     if is_chosen_tan:
                         plt.ylim(-8, 8)
+                    plt.legend()
                     plt.show()
         else:
             print("Brak wybranej funkcji.")
