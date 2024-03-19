@@ -133,13 +133,13 @@ while True:
                         bisection_eps = bi.bisection_eps(a, b, eps, func)
                         newton_eps = n.newton_eps(a, b, eps, func)
                         print("Metodą bisekcji [miejsce zerowe, ilość iteracji]: ", bisection_eps[0], ", ", bisection_eps[1])
-                        if newton_eps[3] == 1:
+                        if newton_eps[2] == 1:
                             print("Metodą Newtona [miejsce zerowe, ilość iteracji]: ", newton_eps[0], ", ", newton_eps[1])
                         else:
                             print("Metoda Newtona: Podczas obliczeń otrzymano punkt, w której pochodna jest zerowa."
                                   "Nie jest możliwe w takiej sytuacji znalezienie miejsca zerowego.")
                         plt.scatter(bisection_eps[0], 0, color="red")
-                        if newton_eps[3] == 1:
+                        if newton_eps[2] == 1:
                             plt.scatter(newton_eps[0], 0, color="green")
                     else:
                         print("Dokładność musi być liczbą większą od 0.")
@@ -150,13 +150,13 @@ while True:
                         bisection_iter = bi.bisection_iter(a, b, iterations, func)
                         newton_iter = n.newton_iteration(a, b, iterations, func)
                         print("Metodą bisekcji [miejsce zerowe, ilość iteracji]: ", bisection_iter[0], ", ", bisection_iter[1])
-                        if newton_iter[3] == 1:
+                        if newton_iter[2] == 1:
                             print("Metodą Newtona [miejsce zerowe, ilość iteracji]: ", newton_iter[0], ", ", newton_iter[1])
                         else:
                             print("Metoda Newtona: Podczas obliczeń otrzymano punkt, w której pochodna jest zerowa."
                                   "Nie jest możliwe w takiej sytuacji znalezienie miejsca zerowego.")
                         plt.scatter(bisection_iter[0], 0, color="red")
-                        if newton_iter[3] == 1:
+                        if newton_iter[2] == 1:
                             plt.scatter(newton_iter[0], 0, color="green")
                     else:
                         print("Liczba iteracji musi być liczbą całkowitą większą od 0.")
