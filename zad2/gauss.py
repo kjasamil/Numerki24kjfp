@@ -1,3 +1,5 @@
+import numpy as np
+
 EPS = 10e-15
 
 
@@ -8,9 +10,15 @@ def solve(equation_system):
     for i in range(0, unknowns_q - 1):
         solution.append(0.0)
     for i in range(0, equation_q - 1):  # i -> numer równania, które odejmujemy od pozostałych
+        if abs(equation_system[i][i]) < EPS:  # jeżeli współczynnik < 10e-15 to wtedy python odczytuje to jako
+            for k in range(i + 1, unknowns_q - 1):  # swap wierszy
+                if abs(equation_system[k][i]) > EPS:
+                    temp = equation_system[i]
+                    equation_system[i] = equation_system[k]
+                    equation_system[k] = temp
+                    break
+
         for j in range(i + 1, equation_q):  # j -> numer równania, od którego odejmujemy równanie o numerze i
-            if abs(equation_system[i][i]) < EPS:  # jeżeli współczynnik < 10e-15 to wtedy python odczytuje to jako
-                return "problem xd"                      # 0 i doszłoby do dzielenia przez 0, czego nie chcemy
             # wyznaczamy mnożnik, przez który pomnożone zostanie równanie o numerze i oraz dodane do równania o nr j
             mul = -equation_system[j][i] / equation_system[i][i]
             for k in range(i, unknowns_q):  # k -> numer niewiadomej
@@ -24,4 +32,5 @@ def solve(equation_system):
         if abs(equation_system[i][i]) < EPS:
             return "nieoznaczony"
         solution[i] = b / equation_system[i][i]
-    return solution
+
+    return np.round(np.array(solution), 2)
