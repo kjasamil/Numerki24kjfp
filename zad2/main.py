@@ -9,6 +9,8 @@ while True:
     case = input("Wybór: ")
     if case == '1':
         directory = input("Podaj ścieżkę do folderu: ")
+        if directory[-1] not in ['/', '\\']:
+            directory = directory + '/'
         if os.path.exists(directory):
             for file in os.listdir(directory):
                 print(file)
