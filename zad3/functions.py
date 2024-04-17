@@ -1,18 +1,22 @@
 import horner as h
-import math as m
+import numpy as np
 
 
 def func1(x):
-    return abs(x-2)
+    return 2*x+2
 
 
 def func2(x):
-    return h.horner(x, [1, 2, 1, 0])
+    return abs(x-2)
 
 
 def func3(x):
-    return 2*m.cos(x)+m.sin(x)
+    return h.horner(x, [1, 2, 1, 0])
 
 
 def func4(x):
-    return abs(m.sin(x**2)+m.cos(x))
+    return 2*np.cos(x)+np.sin(x)
+
+
+def func5(x):
+    return abs(np.sin(x**2)+np.cos(x))
