@@ -32,19 +32,17 @@ while True:
         if case == '1':
             function = f.func1
             chosen_function = "f(x) = |x - 2|"
-            is_function_chosen = True
         elif case == '2':
             function = f.func2
             chosen_function = "f(x) = x^3 + 2x^2 + x"
-            is_function_chosen = True
         elif case == '3':
             function = f.func3
             chosen_function = "2cos(x) + sin(x)"
-            is_function_chosen = True
         elif case == '4':
             function = f.func4
             chosen_function = "|sin(x^2) + cos(x)|"
-            is_function_chosen = True
+        is_function_chosen = True
+        nodes_mode = False
     if case == '2':
         path = input("Podaj ścieżkę do pliku: ")
         if os.path.exists(path):
@@ -67,5 +65,32 @@ while True:
             plt.grid(True)
             lin = np.linspace(NODES[0][0] - 5, NODES[0][-1] + 5, 1000)
             QUOTIENTS = ni.difference_quotients_val(NODES)
-            plt.plot(lin, ni.newton_interpolation_val(lin, NODES, QUOTIENTS))
-            # do dokończenia od tego momentu
+            plt.plot(lin, ni.newton_interpolation_val(lin, NODES, QUOTIENTS), 'r--',
+                     label='Wielomian interpolacyjny')
+            args = NODES[0]
+            vals = NODES[1]
+            plt.scatter(args, vals, color='red', label='Węzeł')
+            plt.title("Interpolacja na wybranych węzłach")
+            plt.xlabel("x")
+            plt.ylabel("y")
+            plt.legend()
+            plt.show()
+        elif args_mode and is_function_chosen:
+            plt.grid(True)
+            lin = np.linspace(ARGUMENTS[0] - 5, ARGUMENTS[-1] + 5, 1000)
+            QUOTIENTS = ni.difference_quotients_func(function, ARGUMENTS)
+            plt.plot(lin, ni.newton_interpolation_func(lin, function, ARGUMENTS, QUOTIENTS), 'r--',
+                     label='Wielomian interpolacyjny')
+            plt.plot(lin, function(lin), label="Funkcja interpolowana")
+            args = ARGUMENTS
+            vals = [function(arg) for arg in ARGUMENTS]
+            plt.scatter(args, vals, color='red', label='Węzeł')
+            plt.title(chosen_function)
+            plt.xlabel("x")
+            plt.ylabel("y")
+            plt.legend()
+            plt.show()
+        else:
+            print("Niewystarczająca ilość informacji, aby dokonać interpolacji.")
+    if case == '5':
+        break
