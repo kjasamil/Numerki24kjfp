@@ -15,13 +15,17 @@ chosen_function = ""
 while True:
     if is_function_chosen:
         print("Wybrana funkcja:", chosen_function)
+    if args_mode:
+        ARGUMENTS = fh.read_arguments(path)
     if nodes_mode:
         print("Wybrano interpolację na węzłach ze wskazanego pliku.")
+        NODES = fh.read_nodes(path)
     print("1. Wybierz funkcję")
     print("2. Wczytaj węzły interpolacji z pliku")
     print("3. Wczytaj współrzędne x-owe węzłów interpolacji z pliku")
     print("4. Interpolacja")
-    print("5. Koniec")
+    print("5. Odśwież")
+    print("6. Koniec")
     case = input("Wybierz opcję: ")
     if case == '1':
         print("1. f(x) = 2x + 2")
@@ -76,6 +80,8 @@ while True:
                      label='Wielomian interpolacyjny')
             args = NODES[0]
             vals = NODES[1]
+            maximum = max(vals)
+            plt.ylim(-4 * maximum, 4 * maximum)
             plt.scatter(args, vals, color='red', label='Węzeł')
             plt.title("Interpolacja na wybranych węzłach")
             plt.xlabel("x")
@@ -94,12 +100,12 @@ while True:
             maximum = max(vals)
             plt.scatter(args, vals, color='red', label='Węzeł')
             plt.title(chosen_function)
-            plt.ylim(-5*maximum, 5*maximum)
+            plt.ylim(-4*maximum, 4*maximum)
             plt.xlabel("x")
             plt.ylabel("y")
             plt.legend()
             plt.show()
         else:
             print("Niewystarczająca ilość informacji, aby dokonać interpolacji.")
-    elif case == '5':
+    elif case == '6':
         break
