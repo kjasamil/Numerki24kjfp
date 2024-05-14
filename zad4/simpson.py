@@ -17,6 +17,3 @@ def simpson(function, arguments):
 
 def func(x):
     return x**2+3
-
-
-print(simpson(func, get_arguments(0, 4, 4)))

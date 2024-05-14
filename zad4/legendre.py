@@ -39,7 +39,3 @@ def legendre(knot_number, a, b, function):
     for idx in range(len(my_knots)):
         knots_sum += normalize(a, b, function, my_knots[idx]) * my_coeffs[idx]
     return knots_sum
-
-
-print(normalize(1, 5, func, 1))
-print("Real value = 49.333, calculated value: " + str(legendre(5, 1, 5, func)))

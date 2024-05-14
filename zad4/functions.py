@@ -6,16 +6,16 @@ def func1(x):
 
 
 def func2(x):
-    return abs(x-2)
+    return (1/3)*x**3 + (1/2)*x**2 + x + 1
 
 
 def func3(x):
-    return x ** 2 + 2
+    return 1/(1+x)
 
 
 def func4(x):
-    return 2*np.cos(x)+np.sin(x)
+    return 2*np.cos(x)
 
 
 def func5(x):
-    return abs(np.sin(x**2)+np.cos(x))
+    return np.sin(x**2)
