@@ -4,7 +4,7 @@ import math
 
 
 knots = [[-math.sqrt(3) / 3, math.sqrt(3) / 3],
-         [-math.sqrt(15) / 5, 0, -math.sqrt(15) / 5],
+         [-math.sqrt(15) / 5, 0, math.sqrt(15) / 5],
          [-math.sqrt(525 + 70 * math.sqrt(30)) / 35, -math.sqrt(525 - 70 * math.sqrt(30)) / 35,
           math.sqrt(525 - 70 * math.sqrt(30)) / 35, math.sqrt(525 + 70 * math.sqrt(30)) / 35, ],
          [-math.sqrt(245 + 14 * math.sqrt(70)) / 21, -math.sqrt(245 - 14 * math.sqrt(70)) / 21,
