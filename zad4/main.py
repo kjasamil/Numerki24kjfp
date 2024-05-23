@@ -1,10 +1,22 @@
 import functions as f
 import legendre as leg
 import simpson as simp
+from matplotlib import pyplot as plt
+import numpy as np
 
 is_function_chosen = False
 chosen_function = ""
 function = None
+
+def draw(a1, b1, func1, name):
+    plt.grid(True)
+    x1 = np.linspace(a1, b1, 1000)
+    plt.plot(x1, func1(x1))
+    plt.title(name)
+    plt.axhline(y=0, color='r')
+    plt.show()
+
+
 while True:
     if is_function_chosen:
         print("Wybrana funkcja:", chosen_function)
@@ -34,11 +46,11 @@ while True:
             is_function_chosen = True
         elif case == '4':
             function = f.func4
-            chosen_function = "2cos(x)"
+            chosen_function = "f(x) = 2cos(x)"
             is_function_chosen = True
         elif case == '5':
             function = f.func5
-            chosen_function = "sin(x^2)"
+            chosen_function = "f(x) = sin(x^2)"
             is_function_chosen = True
     if choice == "2" and is_function_chosen:
         a = float(input("Podaj lewą granicę całkowania a:"))
@@ -55,11 +67,14 @@ while True:
             iteration += 1
             number *= 2
         print("Wynik:", new_integral, ", liczba iteracji:", iteration)
+        draw(a, b, function, chosen_function)
     if choice == "3" and is_function_chosen:
         a = float(input("Podaj lewą granicę całkowania a:"))
         b = float(input("Podaj prawą granicę całkowania b:"))
         n = int(input("Podaj ilość węzłów (od 2 do 5):"))
         integral = leg.legendre(n, a, b, function)
         print("Wynik:", integral)
+        draw(a, b, function, chosen_function)
     if choice == "4":
         break
+
