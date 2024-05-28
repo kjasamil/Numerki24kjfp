@@ -30,4 +30,4 @@ def func7(x):
 
 
 def func8(x):
-    return func1(x) + func3(x)
+    return 3 / (1 + 2 ** x)
