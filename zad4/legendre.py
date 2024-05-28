@@ -1,4 +1,5 @@
 import math
+import numpy as np
 
 # zwraca wartość funkcji podcałkowej w postaci znormalizowanej, tzn. gdy przedział całkowania to [-1;1]
 
@@ -33,9 +34,5 @@ def legendre(knot_number, a, b, function):
         option = 0
     elif option > 3:
         option = 3
-    knots_sum = 0
-    my_knots = knots[option]
-    my_coeffs = coeffs[option]
-    for idx in range(len(my_knots)):
-        knots_sum += normalize(a, b, function, my_knots[idx]) * my_coeffs[idx]
-    return knots_sum
+    my_knots = normalize(a, b, function, np.array(knots[option]))
+    return np.dot(my_knots, coeffs[option])
