@@ -2,10 +2,10 @@ import integral as itg
 import laguerre as lg
 import horner as h
 import math as m
-import numpy as np
-from matplotlib import pyplot as plt
+
 
 INTEGRAL_ERROR = 0.0000001  # błąd do całkowania Simpsonem
+
 
 def lambdas(function, a, b, n):
     coefficients = []

@@ -27,7 +27,7 @@ while True:
     choice = input("Twój wybór:")
     if choice == "1":
         print("1. f(x) = 2x + 2")
-        print("2. f(x) = (1/3)x^3 + (1/2)x^2 + x + 1")
+        print("2. f(x) = 2 * x ^ 3 - 4 * x ^ 2 + 8 * x - 3")
         print("3. f(x) = 3/(1 + x)")
         print("4. f(x) = sin(2x+2)")
         print("5. f(x) = 2^x + 3")
@@ -39,7 +39,7 @@ while True:
             is_function_chosen = True
         if case == '2':
             function = f.func2
-            chosen_function = "f(x) = (1/3)x^3 + (1/2)x^2 + x + 1"
+            chosen_function = "f(x) = 2 * x ^ 3 - 4 * x ^ 2 + 8 * x - 3"
             is_function_chosen = True
         elif case == '3':
             function = f.func3
