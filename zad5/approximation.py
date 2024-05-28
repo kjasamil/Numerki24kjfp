@@ -29,6 +29,7 @@ def error(l_c, function, a, b):  # błąd jako norma L2 z wagą e^-x
     error_int = itg.integral(error_func, a, b, INTEGRAL_ERROR)
     return m.sqrt(error_int)
 
+
 def err_lambdas(function, a, b, eps):
     i = 1
     while True:

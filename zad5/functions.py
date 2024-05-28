@@ -14,20 +14,12 @@ def func3(x):
 
 
 def func4(x):
-    return 2*np.cos(x)
-
-
-def func5(x):
     return np.sin(2 * x + 2)
 
 
-def func6(x):
-    return 2 * x ** 3 - 4 * x ** 2 + 8 * x - 3
-
-
-def func7(x):
+def func5(x):
     return 2 ** x + 3
 
 
-def func8(x):
+def func6(x):
     return 3 / (1 + 2 ** x)
